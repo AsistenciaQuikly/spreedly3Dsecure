@@ -7,10 +7,10 @@
 
 SPREEDLY_GATEWAY_KEY=XXXXXXXXXXXXXXXXXX \
 SPREEDLY_ENV_KEY=XXXXXXXXXXXXXXXXXX \
-REDIRECT_URL=http://your-server.ngrok.io/redirect \
-CALLBACK_URL=http://your-server.ngrok.io/callback \
+REDIRECT_URL=http://localhost:8081/redirect \
+CALLBACK_URL=http://localhost:8081/callback \
 BASIC_AUTH_CREDS="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" \
 SCA_PROVIDER_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
-BASE_URL=http://your-server.ngrok.io \
+BASE_URL=http://localhost:8081 \
 CORE_URL=http://core.spreedly.com \
     yarn start

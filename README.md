@@ -27,7 +27,7 @@ All scaffolding is provided by `/app.js` which loads the `index` and `express` r
 
 You can obtain the Gateway and Environment Key from your "Spreedly Environments" page once you log in to Spreedly.com.
 
-To start the `NodeJS` backend, replace the necessary values and run the following command and load [http://localhost:8080](http://localhost:8080/) or if you use Ngrok, `http://your-server.ngrok.io/`.
+To start the `NodeJS` backend, replace the necessary values and run the following command and load [http://localhost:8081](http://localhost:8081/) or if you use Ngrok, `http://localhost:8081/`.
 
 ```bash
 # replace these values with your own
@@ -37,11 +37,11 @@ To start the `NodeJS` backend, replace the necessary values and run the followin
 
 SPREEDLY_GATEWAY_KEY=XXXXXXXXXXXXXXXXXX \
 SPREEDLY_ENV_KEY=XXXXXXXXXXXXXXXXXX \
-REDIRECT_URL=http://your-server.ngrok.io/redirect \
-CALLBACK_URL=http://your-server.ngrok.io/callback \
+REDIRECT_URL=http://localhost:8081/redirect \
+CALLBACK_URL=http://localhost:8081/callback \
 BASIC_AUTH_CREDS="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" \
 SCA_PROVIDER_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX \
-BASE_URL=http://your-server.ngrok.io \
+BASE_URL=http://localhost:8081 \
 CORE_URL=http://core.spreedly.com \
     yarn start
 ```
@@ -60,7 +60,7 @@ If you need to prevent CORS from breaking calls from your localhost to your `*.s
 
 ## NGROK
 
-1. Create a new domain in [Ngrok Dashboard](https://dashboard.ngrok.com/), ie: `your-server.ngrok.io`
+1. Create a new domain in [Ngrok Dashboard](https://dashboard.ngrok.com/), ie: `localhost:8081`
 2. Modify the start script (or command line options)
 3. Open in Chrome just the same
 

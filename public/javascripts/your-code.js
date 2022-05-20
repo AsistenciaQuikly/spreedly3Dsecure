@@ -44,15 +44,15 @@ function onPaymentMethodFn(token, paymentMethodData) {
 
   var txObject = {
     transaction: {
+      payment_method_token: token /* "DOgExRng62xXFrFbrb1SwxJtmvF" */,
       amount: flowToRun,
-      currency: "EUR",
-      token: token,
+      currency_code: "USD",
       browserData: browserInfo
     }
   }
 
   // see backend logic in `/routes/index.js`
-  var purchaseUrl = `${BASE_URL}/attempt-purchase`
+  var purchaseUrl = `http://localhost:3001/api/attempt-purchase`
   fetch(purchaseUrl, {
     method: 'POST',
     headers: {
