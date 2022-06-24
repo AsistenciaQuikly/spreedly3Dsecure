@@ -5,7 +5,7 @@
 #
 # see https://docs.spreedly.com/reference/api/v1/#using-the-api
 
-SPREEDLY_GATEWAY_KEY=PkynhwagOYog13CuUlt7ws6OulSX \
+SPREEDLY_GATEWAY_KEY=PkynhwagOYog13CuUlt7ws6OulS \
 SPREEDLY_ENV_KEY=XFIRqFab2SNsCm7ZG9YByRT1FqU \
 REDIRECT_URL=http://localhost:8081/redirect \
 CALLBACK_URL=http://localhost:8081/callback \

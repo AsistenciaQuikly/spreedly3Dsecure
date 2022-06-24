@@ -52,7 +52,7 @@ function onPaymentMethodFn(token, paymentMethodData) {
   }
 
   // see backend logic in `/routes/index.js`
-  var purchaseUrl = `http://localhost:3001/api/attempt-purchase`
+  var purchaseUrl = `http://localhost:8081/attempt-purchase`
   fetch(purchaseUrl, {
     method: 'POST',
     headers: {

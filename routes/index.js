@@ -3,13 +3,13 @@ const express = require('express');
 const router = express.Router();
 
 
-const ENV_KEY = process.env.SPREEDLY_ENV_KEY || 'NOT SET'
-const GATEWAY_KEY = process.env.SPREEDLY_GATEWAY_KEY || 'NOT SET'
+const ENV_KEY = process.env.SPREEDLY_ENV_KEY || 'XFIRqFab2SNsCm7ZG9YByRT1FqU'
+const GATEWAY_KEY = process.env.SPREEDLY_GATEWAY_KEY || 'PkynhwagOYog13CuUlt7ws6OulS' // Strpipe: 3idkOg0KFoTJpAKsGzS845Fjq4e
 const SCA_PROVIDER_KEY = process.env.SCA_PROVIDER_KEY || 'NOT SET'
 const REDIRECT_URL = process.env.REDIRECT_URL || 'http://to-be-set.ngrok.io'
 const CALLBACK_URL = process.env.CALLBACK_URL || 'http://to-be-set.ngrok.io'
-const BASIC_AUTH_CREDS = process.env.BASIC_AUTH_CREDS || '<base 64 encoded credentials>'
-const CORE_URL = process.env.CORE_URL || 'http://core.spreedly.com'
+const BASIC_AUTH_CREDS = process.env.BASIC_AUTH_CREDS || 'WEZJUnFGYWIyU05zQ203Wkc5WUJ5UlQxRnFVOnlvWWZEOTBzMzV3Nno4WDRRVXRReG53YUE0RWhiZmYzcjBKN2UzSkZ0OEQ0Q0xNV1VOZlBnNEdJbnAycTRnS24='
+const CORE_URL = process.env.CORE_URL || 'https://core.spreedly.com'
 const BASE_URL = process.env.BASE_URL || 'http://localhost:8081'
 const TEST_SCENARIOS = new Map();
 
@@ -65,37 +65,40 @@ router.get('/express', function (req, res, next) {
  * @see {@link https://docs.spreedly.com/reference/api/v1/#purchase}
 */
 router.post('/attempt-purchase', function (req, res, next) {
-  var purchaseUrl = `${CORE_URL}/v1/gateways/${GATEWAY_KEY}/authorize.json`
+  var purchaseUrl = `${CORE_URL}/v1/gateways/${GATEWAY_KEY}/purchase.json`
+  console.log('------------URI------------------');
   console.debug(`Attempting purchase at ${purchaseUrl} with auth ${BASIC_AUTH_CREDS}`)
 
+  console.log('------------DATA BY FRONT------------------');
   var frontendTx = req.body.transaction
   console.debug(`frontendTx received = ${JSON.stringify(frontendTx)}`)
 
   var txObject = {
     transaction: {
-      amount: frontendTx.amount,
-      currency_code: frontendTx.currency,
-      payment_method_token: frontendTx.token,
-      browser_info: frontendTx.browserData,
+      amount: 100,
+      currency_code: 'USD',
+      payment_method_token: frontendTx.payment_method_token, 
+      browser_info: frontendTx.browserData,/*
       redirect_url: REDIRECT_URL,
       callback_url: CALLBACK_URL,
       sca_provider_key: `${SCA_PROVIDER_KEY}`,
       sca_authentication_parameters: 
-        TEST_SCENARIOS.get(String(frontendTx.amount))
+        TEST_SCENARIOS.get(String(frontendTx.amount)) */
     }
   }
-
+console.log('------------REQUEST------------------');
   console.debug(`Tx request to Spreedly API: ${JSON.stringify(txObject)} `)
 
   axios.post(purchaseUrl, txObject,
     {
       headers: {
-        'Authorization': `BASIC ${BASIC_AUTH_CREDS}`,
+        'Authorization': `Basic WEZJUnFGYWIyU05zQ203Wkc5WUJ5UlQxRnFVOlp2Nmt3eW9Na2NBQjV4d1FIYWQxbXFDa3JQQXdYWHpQTDREZjFQdDVKQ3MzZHRzS2l6RjM0R0VnazlxUUtzQnQ=`,
         'Content-Type': 'application/json'
       }
     }
   ).then(coreResponse => {
     data = coreResponse.data
+    console.log('------------RESPONSE------------------');
     console.debug(`Data received is ${JSON.stringify(data)}`)
 
     // return frontend ONLY the data we need there.
@@ -106,6 +109,8 @@ router.post('/attempt-purchase', function (req, res, next) {
     })
   })
     .catch((e) => {
+      console.log('------------ERROR------------------');
+      console.debug(`Error received is ${JSON.stringify(e)}`)
       if (e.response.status == 422) {
 
         res.json({
