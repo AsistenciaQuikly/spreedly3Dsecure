@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 const ENV_KEY = process.env.SPREEDLY_ENV_KEY || 'XFIRqFab2SNsCm7ZG9YByRT1FqU'
-const GATEWAY_KEY = process.env.SPREEDLY_GATEWAY_KEY || 'B7O1DDzj7pbY4A0Gz62xWPqsc0g' // Strpipe: 3idkOg0KFoTJpAKsGzS845Fjq4e, Test: PkynhwagOYog13CuUlt7ws6OulS
+const GATEWAY_KEY = process.env.SPREEDLY_GATEWAY_KEY || 'HV4USDDCkVsS00IImpgNZ2dYZFB' // Strpipe: B7O1DDzj7pbY4A0Gz62xWPqsc0g, Test: PkynhwagOYog13CuUlt7ws6OulS
 const SCA_PROVIDER_KEY = process.env.SCA_PROVIDER_KEY || 'NOT SET'
 const REDIRECT_URL = process.env.REDIRECT_URL || 'http://to-be-set.ngrok.io'
 const CALLBACK_URL = process.env.CALLBACK_URL || 'http://to-be-set.ngrok.io'
@@ -75,8 +75,8 @@ router.post('/attempt-purchase', function (req, res, next) {
 
   var txObject = {
     transaction: {
-      amount: 100,
-      currency_code: 'USD',
+      amount: frontendTx.amount,
+      currency_code: frontendTx.currency_code,
       payment_method_token: frontendTx.payment_method_token, 
       browser_info: frontendTx.browserData,/*
       redirect_url: REDIRECT_URL,
