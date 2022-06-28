@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 const ENV_KEY = process.env.SPREEDLY_ENV_KEY || 'XFIRqFab2SNsCm7ZG9YByRT1FqU'
-const GATEWAY_KEY = process.env.SPREEDLY_GATEWAY_KEY || 'PkynhwagOYog13CuUlt7ws6OulS' // Strpipe: 3idkOg0KFoTJpAKsGzS845Fjq4e
+const GATEWAY_KEY = process.env.SPREEDLY_GATEWAY_KEY || 'QnmrpbFxWzWNdkkKEr75BrPsjnf' // Strpipe: 3idkOg0KFoTJpAKsGzS845Fjq4e, Test: PkynhwagOYog13CuUlt7ws6OulS
 const SCA_PROVIDER_KEY = process.env.SCA_PROVIDER_KEY || 'NOT SET'
 const REDIRECT_URL = process.env.REDIRECT_URL || 'http://to-be-set.ngrok.io'
 const CALLBACK_URL = process.env.CALLBACK_URL || 'http://to-be-set.ngrok.io'
@@ -87,12 +87,17 @@ router.post('/attempt-purchase', function (req, res, next) {
     }
   }
 console.log('------------REQUEST------------------');
-  console.debug(`Tx request to Spreedly API: ${JSON.stringify(txObject)} `)
+  console.debug(`Tx request to Spreedly API: ${JSON.stringify(txObject)} `);
+  console.log('------------Authorization------------------');
+  console.debug(`Authorization: BASIC ${BASIC_AUTH_CREDS}`);
 
   axios.post(purchaseUrl, txObject,
     {
-      headers: {
-        'Authorization': `Basic WEZJUnFGYWIyU05zQ203Wkc5WUJ5UlQxRnFVOlp2Nmt3eW9Na2NBQjV4d1FIYWQxbXFDa3JQQXdYWHpQTDREZjFQdDVKQ3MzZHRzS2l6RjM0R0VnazlxUUtzQnQ=`,
+      auth:{
+        username: 'XFIRqFab2SNsCm7ZG9YByRT1FqU',
+        password: 'yoYfD90s35w6z8X4QUtQxnwaA4Ehbff3r0J7e3JFt8D4CLMWUNfPg4GInp2q4gKn'
+      },      headers: {
+        //'Authorization': `Basic ${BASIC_AUTH_CREDS}`,
         'Content-Type': 'application/json'
       }
     }
@@ -118,7 +123,9 @@ console.log('------------REQUEST------------------');
           state: e.response.data.transaction.state,
           message: e.response.data.transaction.message
         })
-        // Request was made and server responded with error
+        // Request was made and server responded with error.
+      console.log('------------STATUS 422------------------');
+
         console.debug(e.response.data)
         console.debug(e.response.data.transaction.token)
       } else{
